@@ -7,6 +7,8 @@ Created on Thu Jan 25 19:05:24 2018
 from ripple_data import RippleAPI
 from urllib.parse import urljoin
 
+import sys
+
 
 class RippleAccount(RippleAPI):
     """
@@ -20,144 +22,127 @@ class RippleAccount(RippleAPI):
     def __str__(self):
         return self.ACCOUNTS_URL.format(**self.__dict__)
 
-    def get_account(self):
+    def account(self):
         """
         Get creation info for a specific ripple account
         """
 
         method = ''
+        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method))
 
-        rs = RippleAPI.get_ripple_data(self, urljoin(str(self), method))
-
-        if rs['result'] != 'success':
-            raise KeyError("{} not found".format(method))
-
-        return rs['account_data']
+        return result['account_data']
 
     def balances(self, ledger_index='', ledger_hash='', date='', currency='',
-                 counterparty='', limit='', fmt=''):
+                 counterparty='', limit='', format=''):
         """
         Get all balances held or owed by a specific XRP Ledger account.
         """
 
-        method = 'balances'
+        method = sys._getframe().f_code.co_name
+        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+                                           locals())
 
-        params = {
-            'ledger_index': ledger_index,
-            'ledger_hash': ledger_hash,
-            'date': date,
-            'currency': currency,
-            'counterparty': counterparty,
-            'limit': limit,
-            'format': fmt
-        }
-
-        rs = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
-                                       params)
-
-        if rs['result'] != 'success':
-            raise KeyError("{} not found".format(method))
-
-        return rs[method]
+        return result[method]
 
     def orders(self, ledger_index='', ledger_hash='', date='', limit='',
-               fmt=''):
+               format=''):
         """
         Get orders in the order books, placed by a specific account. This does
         not return orders that have already been filled.
         """
 
-        method = 'orders'
+        method = sys._getframe().f_code.co_name
+        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+                                           locals())
 
-        params = {
-            'ledger_index': ledger_index,
-            'ledger_hash': ledger_hash,
-            'date': date,
-            'limit': limit,
-            'format': fmt
-        }
+        return result[method]
 
-        rs = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
-                                       params)
+    def transactions(self, start='', end='', min_sequence='', max_sequence='',
+                     type='', result='', binary='', descending='', limit='',
+                     format=''):
+        """
+        Retrieve a history of transactions that affected a specific account.
+        This includes all transactions the account sent, payments the account
+        received, and payments that rippled through the account.
+        """
 
-        if rs['result'] != 'success':
-            raise KeyError("{} not found".format(method))
+        method = sys._getframe().f_code.co_name
+        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+                                           locals())
 
-        return rs[method]
+        return result[method]
+
+    def payments(self, start='', end='', type='', currency='', issuer='',
+                 source_tag='', destination_tag='', descending='', limit='',
+                 marker='', format=''):
+        """
+        Retrieve a payments for a specified account.
+        """
+
+        method = sys._getframe().f_code.co_name
+        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+                                           locals())
+
+        return result[method]
+
+    def exchanges(self, base='', counter='', start='', end='', type='',
+                  descending='', limit='', marker='', format=''):
+        """
+        Retrieve Exchanges for a given account over time.
+        """
+        # TODO: base, counter implementation
+
+        method = sys._getframe().f_code.co_name
+        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+                                           locals())
+
+        return result[method]
 
     def balance_changes(self, currency='', counterparty='', start='', end='',
-                        desc='', limit='', marker='', fmt=''):
+                        descending='', limit='', marker='', format=''):
         """
         Retrieve Balance changes for a given account over time.
         """
 
-        method = 'balance_changes'
+        method = sys._getframe().f_code.co_name
+        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+                                           locals())
 
-        params = {
-            'currency': currency,
-            'counterparty': counterparty,
-            'start': start,
-            'end': end,
-            'descending': desc,
-            'limit': limit,
-            'marker': marker,
-            'format': fmt
-        }
+        return result[method]
 
-        rs = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
-                                       params)
+    def reports(self, currency='', counterparty='', date='', start='', end='',
+                accounts='', payments='', descending='', format=''):
+        """
+        Retrieve daily summaries of payment activity for an account.
+        """
+        # TODO: check date OR start and end
 
-        if rs['result'] != 'success':
-            raise KeyError("{} not found".format(method))
+        method = sys._getframe().f_code.co_name
+        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+                                           locals())
 
-        return rs[method]
+        return result[method]
 
-    def value_stats(self, start='', end='', desc='', limit='', marker='',
-                    fmt=''):
+    def value_stats(self, start='', end='', descending='', limit='', marker='',
+                    format=''):
         """
         Retrieve daily summaries of transaction activity for an account
         """
 
         method = 'stats/value'
+        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+                                           locals())
 
-        params = {
-            'start': start,
-            'end': end,
-            'descending': desc,
-            'limit': limit,
-            'marker': marker,
-            'format': fmt
-        }
+        return result['rows']
 
-        rs = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
-                                       params)
-
-        if rs['result'] != 'success':
-            raise KeyError("{} not found".format(method))
-
-        return rs['rows']
-
-    def transaction_stats(self, start='', end='', desc='', limit='', marker='',
-                          fmt=''):
+    def transaction_stats(self, start='', end='', descending='', limit='',
+                          marker='', format=''):
         """
         Retrieve daily summaries of transaction activity for an account
         """
 
-        method = 'stats/transactions'
+        method = 'stats/value'
+        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+                                           locals())
 
-        params = {
-            'start': start,
-            'end': end,
-            'descending': desc,
-            'limit': limit,
-            'marker': marker,
-            'format': fmt
-        }
-
-        rs = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
-                                       params)
-
-        if rs['result'] != 'success':
-            raise KeyError("{} not found".format(method))
-
-        return rs['rows']
+        return result['rows']

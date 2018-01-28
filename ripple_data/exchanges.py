@@ -7,6 +7,8 @@ Created on Thu Jan 25 19:05:24 2018
 from ripple_data import RippleAPI
 from urllib.parse import urljoin
 
+import sys
+
 
 class RippleExchange(RippleAPI):
     """
@@ -22,32 +24,16 @@ class RippleExchange(RippleAPI):
     def __str__(self):
         return self.EXCHANGES_URL.format(**self.__dict__)
 
-    def get_exchanges(self, start='', end='', interval='', desc='',
-                      reduce='', limit='', marker='', autobridged='', fmt=''):
+    def exchanges(self, start='', end='', interval='', descending='',
+                  reduce='', limit='', marker='', autobridged='', format=''):
         """
-        Retrieve Exchanges for a given currency pair over time.
-        Results can be returned as individual exchanges or
-        aggregated to a specific list of intervals
+        Retrieve Exchanges for a given currency pair over time. Results can be
+        returned as individual exchanges or aggregated to a specific list of
+        intervals
         """
 
-        method = ''
+        method = sys._getframe().f_code.co_name
+        result = RippleAPI.get_ripple_data(self, urljoin(str(self), ''),
+                                           locals())
 
-        params = {
-            'start': start,
-            'end': end,
-            'interval': interval,
-            'descending': desc,
-            'reduce': reduce,
-            'limit': limit,
-            'marker': marker,
-            'autobridged': autobridged,
-            'format': fmt
-        }
-
-        rs = RippleAPI.get_ripple_data(
-                self, urljoin(str(self), method), params)
-
-        if rs['result'] != 'success':
-            raise KeyError("{} not found".format(method))
-
-        return rs['exchanges']
+        return result[method]

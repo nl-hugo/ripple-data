@@ -22,8 +22,8 @@ class TestAccounts(TestCase):
         self.assertEqual(str(self.account),
                          'v2/accounts/{}/'.format(self.ADDRESS))
 
-    def test_get_account(self):
-        self.assertEqual(self.account.get_account()['account'], self.ADDRESS)
+    def test_account(self):
+        self.assertEqual(self.account.account()['account'], self.ADDRESS)
 
     def test_balances(self):
         self.assertTrue(len(self.account.balances()) >= 0)
@@ -31,8 +31,20 @@ class TestAccounts(TestCase):
     def test_orders(self):
         self.assertTrue(len(self.account.orders()) >= 0)
 
+    def test_transactions(self):
+        self.assertTrue(len(self.account.transactions()) >= 0)
+
+    def test_payments(self):
+        self.assertTrue(len(self.account.payments()) >= 0)
+
+    def test_exchanges(self):
+        self.assertTrue(len(self.account.exchanges()) >= 0)
+
     def test_balance_changes(self):
         self.assertTrue(len(self.account.balance_changes()) >= 0)
+
+    def test_reports(self):
+        self.assertTrue(len(self.account.reports()) >= 0)
 
     def test_value_stats(self):
         self.assertTrue(len(self.account.value_stats()) >= 0)

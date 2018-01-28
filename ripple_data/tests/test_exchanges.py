@@ -23,6 +23,6 @@ class TestExchanges(TestCase):
         self.assertEqual(str(self.exchange),
                          '/v2/exchanges/{}/{}'.format(self.BASE, self.COUNTER))
 
-    def test_get_exchanges(self):
-        self.assertTrue(len(self.exchange.get_exchanges()) > 0)
+    def test_exchanges(self):
+        self.assertTrue(len(self.exchange.exchanges()) > 0)
         pass

@@ -32,6 +32,6 @@ class TestCurrencies(TestCase):
         self.assertEqual(str(self.currency),
                          'v2/currencies/{}/'.format(self.CURRENCY))
 
-    def test_get_currency_image(self):
-        self.currency.get_currency_image()
+    def test_currency_image(self):
+        self.currency.currency_image()
         self.assertTrue(os.path.isfile(self.CURRENCY))

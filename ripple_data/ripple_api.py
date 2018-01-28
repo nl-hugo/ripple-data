@@ -20,17 +20,27 @@ class RippleAPI(object):
         """
         """
         # removes empty args
+        try:
+            del params['self']
+        except KeyError:
+            pass
+        print(params)
+        print(method)
         query = dict((k, v) for k, v in params.items() if v)
 
         url_endpoint = urljoin(self.RIPPLE_API_URL, method)
-        # print(url_endpoint)
+        print(url_endpoint)
 
         response = requests.get(url_endpoint, params=urlencode(query))
-        # print(response.url)
+        print(response.url)
         # print(response.headers['content-type'])
 
         if response.status_code != requests.codes.ok:
             response.raise_for_status()
+
+#       TODO: check result, but only for JSON
+#        if response['result'] != 'success':
+#            raise KeyError("{} not found".format(method))
 
         if response.headers['content-type'] == self.MIME_TYPE_JSON:
             return response.json()
