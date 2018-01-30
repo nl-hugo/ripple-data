@@ -16,9 +16,6 @@ class TestExchanges(TestCase):
         self.exchange = exchanges.RippleExchange(self.BASE, self.COUNTER)
         pass
 
-    def tearDown(self):
-        pass
-
     def test_str(self):
         self.assertEqual(str(self.exchange),
                          '/v2/exchanges/{}/{}'.format(self.BASE, self.COUNTER))

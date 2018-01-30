@@ -7,6 +7,7 @@ Currently implements the following API methods:
 - Get Exchanges - GET /v2/exchanges/{:base}/{:counter}
 
 #### Account Methods:
+- Get Accounts - GET /v2/accounts
 - Get Account - GET /v2/accounts/{:address}
 - Get Account Balances - GET /v2/accounts/{:address}/balances
 - Get Account Orders - GET /v2/accounts/{:address}/orders
@@ -19,17 +20,29 @@ Currently implements the following API methods:
 - Get Account Value Stats - GET /v2/accounts/{:address}/stats/value
 
 TODO:
-- Get Accounts - GET /v2/accounts
 - Get Transaction By Account and Sequence - GET /v2/accounts/{:address}/transactions/{:sequence}
 
 #### External Information Methods:
+- Get All Gateways - GET /v2/gateways
+- Get Gateway - GET /v2/gateways/{:gateway}
 - Get Currency Image - GET /v2/currencies/{:currencyimage}
+
+TODO:
+- Get rippled Versions - GET /v2/network/rippled_versions
 
 ## usage
 
 ### test
-```python setup.py test```
 
+Run all tests:
+```
+python setup.py test
+```
+
+Or run a single module test:
+```
+python -m unittest test_accounts
+```
 
 ### deploy
 ```
@@ -38,11 +51,13 @@ twine upload dist/*
 ```
 
 ### install
-```python install ripple_data```
+```
+python install ripple_data
+```
 
 ## TODO
 
 - extended tests
 - code coverage
-- argument checking
-- check result status ('success')
+- argument checking?
+- implement logging

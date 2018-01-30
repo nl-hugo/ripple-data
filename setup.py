@@ -9,6 +9,7 @@ setup(name='ripple_data',
       license='MIT',
       packages=['ripple_data'],
       install_requires=[
+              'request'
       ],
       zip_safe=False,
       test_suite='nose.collector',

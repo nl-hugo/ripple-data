@@ -4,10 +4,9 @@ Created on Thu Jan 25 19:05:24 2018
 
 @author: hjanssen
 """
-from ripple_data import RippleAPI
-from urllib.parse import urljoin
-
 import sys
+
+from ripple_data import RippleAPI
 
 
 class RippleExchange(RippleAPI):
@@ -19,7 +18,6 @@ class RippleExchange(RippleAPI):
     def __init__(self, base, counter):
         self.base = base
         self.counter = counter
-        # TODO: validate? unless XRP, currency should have an issuer
 
     def __str__(self):
         return self.EXCHANGES_URL.format(**self.__dict__)
@@ -33,7 +31,6 @@ class RippleExchange(RippleAPI):
         """
 
         method = sys._getframe().f_code.co_name
-        result = RippleAPI.get_ripple_data(self, urljoin(str(self), ''),
-                                           locals())
+        result = RippleAPI.get_ripple_data(str(self), locals())
 
         return result[method]

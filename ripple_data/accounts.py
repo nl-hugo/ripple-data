@@ -4,10 +4,10 @@ Created on Thu Jan 25 19:05:24 2018
 
 @author: hjanssen
 """
+import sys
+
 from ripple_data import RippleAPI
 from urllib.parse import urljoin
-
-import sys
 
 
 class RippleAccount(RippleAPI):
@@ -22,13 +22,25 @@ class RippleAccount(RippleAPI):
     def __str__(self):
         return self.ACCOUNTS_URL.format(**self.__dict__)
 
-    def account(self):
+    @classmethod
+    def accounts(cls):
         """
-        Get creation info for a specific ripple account
+        Get info for all account creations.
+        """
+
+        method = 'accounts'
+        result = RippleAPI.get_ripple_data(
+                urljoin(cls.ACCOUNTS_URL.format(address=''), ''))
+
+        return result[method]
+
+    def get(self):
+        """
+        Get creation info for a specific ripple account.
         """
 
         method = ''
-        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method))
+        result = RippleAPI.get_ripple_data(urljoin(str(self), method))
 
         return result['account_data']
 
@@ -39,7 +51,7 @@ class RippleAccount(RippleAPI):
         """
 
         method = sys._getframe().f_code.co_name
-        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+        result = RippleAPI.get_ripple_data(urljoin(str(self), method),
                                            locals())
 
         return result[method]
@@ -52,7 +64,7 @@ class RippleAccount(RippleAPI):
         """
 
         method = sys._getframe().f_code.co_name
-        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+        result = RippleAPI.get_ripple_data(urljoin(str(self), method),
                                            locals())
 
         return result[method]
@@ -65,9 +77,10 @@ class RippleAccount(RippleAPI):
         This includes all transactions the account sent, payments the account
         received, and payments that rippled through the account.
         """
+        # TODO: sequence implementation
 
         method = sys._getframe().f_code.co_name
-        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+        result = RippleAPI.get_ripple_data(urljoin(str(self), method),
                                            locals())
 
         return result[method]
@@ -80,7 +93,7 @@ class RippleAccount(RippleAPI):
         """
 
         method = sys._getframe().f_code.co_name
-        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+        result = RippleAPI.get_ripple_data(urljoin(str(self), method),
                                            locals())
 
         return result[method]
@@ -93,7 +106,7 @@ class RippleAccount(RippleAPI):
         # TODO: base, counter implementation
 
         method = sys._getframe().f_code.co_name
-        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+        result = RippleAPI.get_ripple_data(urljoin(str(self), method),
                                            locals())
 
         return result[method]
@@ -105,7 +118,7 @@ class RippleAccount(RippleAPI):
         """
 
         method = sys._getframe().f_code.co_name
-        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+        result = RippleAPI.get_ripple_data(urljoin(str(self), method),
                                            locals())
 
         return result[method]
@@ -118,7 +131,7 @@ class RippleAccount(RippleAPI):
         # TODO: check date OR start and end
 
         method = sys._getframe().f_code.co_name
-        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+        result = RippleAPI.get_ripple_data(urljoin(str(self), method),
                                            locals())
 
         return result[method]
@@ -126,11 +139,11 @@ class RippleAccount(RippleAPI):
     def value_stats(self, start='', end='', descending='', limit='', marker='',
                     format=''):
         """
-        Retrieve daily summaries of transaction activity for an account
+        Retrieve daily summaries of transaction activity for an account.
         """
 
         method = 'stats/value'
-        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+        result = RippleAPI.get_ripple_data(urljoin(str(self), method),
                                            locals())
 
         return result['rows']
@@ -138,11 +151,11 @@ class RippleAccount(RippleAPI):
     def transaction_stats(self, start='', end='', descending='', limit='',
                           marker='', format=''):
         """
-        Retrieve daily summaries of transaction activity for an account
+        Retrieve daily summaries of transaction activity for an account.
         """
 
         method = 'stats/value'
-        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method),
+        result = RippleAPI.get_ripple_data(urljoin(str(self), method),
                                            locals())
 
         return result['rows']

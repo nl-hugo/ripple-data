@@ -20,14 +20,9 @@ class RippleCurrency(RippleAPI):
     def __str__(self):
         return self.CURRENCIES_URL.format(**self.__dict__)
 
-    def currency_image(self):
+    def get(self):
         """
         Retrieve vector icons for various currencies.
         """
 
-        method = ''
-        result = RippleAPI.get_ripple_data(self, urljoin(str(self), method))
-
-        with open(self.currencyimage, 'wb') as fd:
-            for chunk in result.iter_content(chunk_size=128):
-                fd.write(chunk)
+        return RippleAPI.get_ripple_data(urljoin(str(self), ''))
