@@ -19,3 +19,6 @@ nosetests.xml
 
 # Spyder project settings.
 .spyproject/
+
+# Log files
+*.log
