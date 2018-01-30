@@ -25,8 +25,6 @@ TODO:
 - Get All Gateways - GET /v2/gateways
 - Get Gateway - GET /v2/gateways/{:gateway}
 - Get Currency Image - GET /v2/currencies/{:currencyimage}
-
-TODO:
 - Get rippled Versions - GET /v2/network/rippled_versions
 
 
@@ -68,7 +66,7 @@ wallet.balance_changes(start=start_date, limit=1)
 #  'tx_index': 2}]
 ```
 
-**List gateway properties:**
+**List gateway properties**
 ```python
 from ripple_data import gateways
 
@@ -82,6 +80,17 @@ gateways.RippleGateway('Gatehub').get()
 # 'name': 'Gatehub',
 # 'normalized': 'gatehub',
 # 'start_date': '2015-02-15T00:00:00Z'}
+```
+
+**List ripple versions**
+```python
+from ripple_data import network
+
+network.RippleNetwork.rippled_versions()
+
+#[{'date': '2018-01-30T00:00:00Z', 'repo': 'nightly', 'version': '0.90.0'},
+# {'date': '2018-01-30T00:00:00Z', 'repo': 'stable', 'version': '0.81.0'},
+# {'date': '2018-01-30T00:00:00Z', 'repo': 'unstable', 'version': '0.81.0'}]
 ```
 
 ## Test and deployment commands

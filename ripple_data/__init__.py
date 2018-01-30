@@ -7,6 +7,7 @@ from .accounts import RippleAccount
 from .currencies import RippleCurrency
 from .exchanges import RippleExchange
 from .gateways import RippleGateway
+from .network import RippleNetwork
 
 # Initialize logging
 with open("logging.json", "r", encoding="utf-8") as fd:
